@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Website Ulang Tahun</title>
+    <style>
+        body {
+            background-color: pink;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            transition: 0.5s;
+        }
+        #page1 h1 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        #gift {
+            width: 180px;
+            height: auto;
+            margin-bottom: 20px;
+            cursor: pointer;
+            animation: shake 1s infinite;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+        }
+
+        /* Halaman 2 */
+        #page2 {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        #page2 .envelope {
+            position: relative;
+            width: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #centralImage {
+            max-width: 90vw;  /* diperbesar sedikit */
+            max-height: 75vh; /* diperbesar sedikit */
+            object-fit: contain;
+            margin-bottom: 20px;
+            cursor: pointer;
+            display: block;
+        }
+        #clickHint {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #b30000;
+            display: none;
+        }
+
+        /* Halaman 3 */
+        #page3 {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+        #page3 h1, #page3 p {
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin: 0.5rem 0;
+        }
+        #page3 img {
+            max-width: 90vw;
+            max-height: 70vh;
+            object-fit: contain;
+            cursor: pointer;
+        }
+
+        /* Halaman 4 */
+        #page4 {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #ffb6c1; /* pink background */
+            font-family: 'Arial Black', Arial, sans-serif;
+            color: black;
+        }
+        #page4 h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        #page4 .confetti {
+            font-size: 2em;
+            margin-bottom: 20px;
+            display: none;
+        }
+        #page4 h2 {
+            font-size: 2em;
+            margin: 20px 0;
+            display: none;
+        }
+        #page4 .cake {
+            width: 250px;
+            margin: 20px auto;
+            display: none;
+            cursor: pointer; /* Tambahkan cursor pointer agar terlihat bisa diklik */
+        }
+        #page4 .click-text {
+            font-size: 1.8em;
+            margin-top: 25px;
+            cursor: pointer;
+            user-select: none;
+            display: none;
+        }
+        #page4 .click-text:hover {
+            color: #d6336c;
+        }
+
+        /* Halaman 5 (Traktiran) */
+        #page5 {
+            display: none;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: pink; /* Background pink */
+            margin: 0;
+            padding: 20px;
+            position: relative; /* Untuk positioning tombol */
+            height: 100vh;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #page5 #typing-text {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #page5 #image {
+            display: none;
+            margin: 20px auto;
+            max-width: 300px;
+        }
+        #page5 #options {
+            display: none;
+            margin-top: 20px;
+            position: relative; /* Memastikan opsi tetap di tengah */
+        }
+        #page5 .button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin: 10px;
+            border: 2px solid #333;
+            background-color: #fff;
+            cursor: pointer;
+            position: relative; /* Awalnya relative untuk centering */
+        }
+        #page5 #no-button {
+            transition: all 0.1s;
+        }
+        #page5 #page2-traktir {
+            display: none;
+            position: relative; /* Untuk positioning popup */
+            height: 100vh; /* Tinggi penuh layar */
+        }
+        #page5 #popup {
+            font-size: 24px; /* Diubah ke 24px agar ukuran akhir sama dengan thank-you */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0); /* Mulai dari tengah, scale 0 */
+            animation: popup 1.5s ease-out forwards; /* Durasi diperpanjang untuk efek lebih dramatis */
+        }
+        @keyframes popup {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(10); opacity: 1; } /* Gede banget, hampir penuh layar HP */
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; } /* Kecil ke ukuran standar, sekarang 24px */
+        }
+        #page5 #thank-you {
+            font-size: 24px;
+            margin-top: 20px;
+            position: absolute;
+            top: 60%; /* Di bawah popup, sekitar 60% dari atas layar */
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Halaman 1 -->
+    <div id="page1">
+        <h1>🎂🎂 SELAMAT DATANG 🎂🎂</h1>
+        <img id="gift" src="pngtree-kotak-hadiah-dengan-pita-merah-dalam-bentuk-3d-png-image_6943212.png" alt="Foto" />
+        <p>KLIK KADONYA YA!!</p>
+    </div>
+
+    <!-- Halaman 2 -->
+    <div id="page2">
+        <div class="envelope">
+            <img 
+                id="centralImage" 
+                src="20251125_072523.png" 
+                alt="Kartu Ulang Tahun" 
+                title="Klik Kertas Ini" 
+            />
+            <div id="clickHint">KLIK KERTAS NYA</div>
+        </div>
+    </div>
+
+    <!-- Halaman 3 -->
+    <div id="page3">
+        <h1>NAH INI ORANG NYA KALO GAK SALAH</h1>
+        <img src="IMG_20251125_064741.jpg" alt="Foto" />
+        <p>KLIK FOTONYA YAA</p>
+    </div>
+
+    <!-- Halaman 4 -->
+    <div id="page4">
+        <h1 id="birthdayText"></h1>
+        <div class="confetti" id="confetti">🎉🎉🎉🎉🎉</div>
+        <h2 id="ageText"></h2>
+        <img src="pngtree-birthday-cake-clipart-vector-image-of-birthday-cake-with-berries-and-png-image_6861844.png" alt="Birthday Cake" class="cake" id="cake" />
+        <div class="click-text" id="clickText">
+            KLIK KUE NYA
+        </div>
+    </div>
+
+    <!-- Halaman 5 (Traktiran) -->
+    <div id="page5">
+        <div id="page1-traktir">
+            <div id="typing-text"></div>
+            <img id="image" src="oreo_grande-copy.png" alt="Gambar Lucu">
+            <div id="options">
+                <button class="button" id="yes-button">IYA MAU TRAKTIR</button>
+                <button class="button" id="no-button">GAMAU TRAKTIR</button>
+            </div>
+        </div>
+        <div id="page2-traktir">
+            <div id="popup">ASIKKKKK</div>
+            <div id="thank-you"></div>
+        </div>
+    </div>
+
+    <script>
+        const page1 = document.getElementById('page1');
+        const page2 = document.getElementById('page2');
+        const page3 = document.getElementById('page3');
+        const page4 = document.getElementById('page4');
+        const page5 = document.getElementById('page5');
+        const gift = document.getElementById('gift');
+        const centralImage = document.getElementById('centralImage');
+        const clickHint = document.getElementById('clickHint');
+        const page3Img = document.querySelector('#page3 img');
+        const birthdayText = document.getElementById('birthdayText');
+        const confetti = document.getElementById('confetti');
+        const ageText = document.getElementById('ageText');
+        const cake = document.getElementById('cake');
+        const clickText = document.getElementById('clickText');
+
+        // Fungsi animasi mengetik
+        function typeWriter(element, text, speed, callback) {
+            let i = 0;
+            element.textContent = '';
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    if (callback) callback();
+                }
+            }
+            type();
+        }
+
+        gift.onclick = function() {
+            page1.style.display = 'none';
+            page2.style.display = 'flex';
+            document.body.style.flexDirection = 'column';
+            clickHint.style.display = 'none';
+
+            setTimeout(() => {
+                clickHint.style.display = 'block';
+            }, 5000);
+        };
+
+        centralImage.onclick = function() {
+            if (clickHint.style.display === 'block') {
+                page2.style.display = 'none';
+                page3.style.display = 'flex';
+            } else {
+                alert('Tunggu dulu hingga tulisan "KLIK KERTAS NYA" muncul ya!');
+            }
+        };
+
+        page3Img.onclick = function() {
+            page3.style.display = 'none';
+            page4.style.display = 'flex';
+            document.body.style.backgroundColor = '#ffb6c1';
+
+            // Animasi mengetik untuk "HAPPY BIRTHDAY ARA 🎉🎉🎉🎉🎉"
+            typeWriter(birthdayText, 'HAPPY BIRTHDAY ARA 🎉🎉🎉🎉🎉', 100, function() {
+                // Setelah selesai, animasi mengetik untuk "YANG KE 18"
+                typeWriter(ageText, 'YANG KE 18', 100, function() {
+                    // Setelah "YANG KE 18" selesai, langsung muncul foto
+                    cake.style.display = 'block';
+                    // Jeda 5 detik, lalu muncul tulisan "KLIK KUE NYA"
+                    setTimeout(() => {
+                        clickText.style.display = 'block';
+                        // Setelah tulisan muncul, gambar kue baru bisa diklik
+                        cake.onclick = function() {
+                            page4.style.display = 'none';
+                            page5.style.display = 'flex';
+                            document.body.style.backgroundColor = 'pink'; // Reset background ke pink
+                            // Jalankan script untuk halaman 5
+                            startPage5();
+                        };
+                    }, 5000);
+                });
+                ageText.style.display = 'block';
+            });
+        };
+
+        // Fungsi untuk halaman 5 (traktiran)
+        function startPage5() {
+            const text = "JANGAN LUPA TRAKTIRAN NYA YAAA";
+            let index = 0;
+            const typingText = document.getElementById('typing-text');
+
+            function typeWriterTraktir() {
+                if (index < text.length) {
+                    typingText.innerHTML += text.charAt(index);
+                    index++;
+                    setTimeout(typeWriterTraktir, 100);
+                } else {
+                    // Setelah selesai ketik, tunggu 3 detik lalu tampilkan gambar dan opsi
+                    setTimeout(() => {
+                        document.getElementById('image').style.display = 'block';
+                        setTimeout(() => {
+                            document.getElementById('options').style.display = 'block';
+                        }, 1000); // Tambahan delay untuk opsi
+                    }, 3000);
+                }
+            }
+            typeWriterTraktir();
+
+            // Fungsi untuk tombol "GAMAU TRAKTIR" bergerak acak di seluruh layar (tetap dalam viewport) tanpa batasan jumlah klik
+            document.getElementById('no-button').addEventListener('click', function() {
+                const button = this;
+                const maxX = window.innerWidth - button.offsetWidth;
+                const maxY = window.innerHeight - button.offsetHeight;
+                const randomX = Math.random() * maxX;
+                const randomY = Math.random() * maxY;
+                button.style.position = 'absolute';
+                button.style.left = randomX + 'px';
+                button.style.top = randomY + 'px';
+                // Event listener tetap aktif, sehingga bisa diklik berulang kali tanpa batas apa pun
+            });
+
+            // Fungsi untuk tombol "IYA MAU TRAKTIR" pindah ke halaman 2 traktir
+            document.getElementById('yes-button').addEventListener('click', function() {
+                document.getElementById('page1-traktir').style.display = 'none';
+                document.getElementById('page2-traktir').style.display = 'block';
+                // Animasi pop up untuk "ASIKKKKK"
+                setTimeout(() => {
+                    // Animasi ketik untuk "MAKASIH ARA YANG BAIK HATI"
+                    const thankText = "MAKASIH ARA YANG BAIK HATI";
+                    let thankIndex = 0;
+                    const thankYou = document.getElementById('thank-you');
+                    function typeThankYou() {
+                        if (thankIndex < thankText.length) {
+                            thankYou.innerHTML += thankText.charAt(thankIndex);
+                            thankIndex++;
+                            setTimeout(typeThankYou, 100);
+                        }
+                    }
+                    typeThankYou();
+                }, 2000); // Delay diperpanjang agar muncul setelah animasi popup selesai (1.5s + buffer)
+            });
+        }
+    </script>
+</body>
+</html>
